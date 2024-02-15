@@ -16,31 +16,27 @@ import { ChatMessage } from "@/components/ChatMessage";
 import { ChatPrompt } from "@/components/ChatPrompt";
 import { ChatScroll } from "@/components/ChatScroll";
 import { Schema } from "@/amplify/data/resource";
-import * as queries from "@/queries";
+import * as queries from "@/graphql/queries";
+import { useMessage } from "@/hooks/useMessage";
+
+const ChatMessages = ({ messages }: { messages: Array<Schema["Message"]> }) => {
+  console.log({ messages });
+  return (
+    <>
+      {messages.map((message, i) => (
+        <ChatMessage message={message} key={`${i}-${message.type}`} />
+      ))}
+    </>
+  );
+};
 
 export default function ChatPage() {
   const params = useParams();
-  const conversationId = params?.id;
-  const [messages, setMessages] = React.useState<Array<Schema["Message"]>>([]);
-
-  React.useEffect(() => {
-    const sub = client.models.Message.observeQuery({
-      filter: {
-        conversationMessagesId: {
-          // todo: cast this better
-          eq: `${conversationId}`,
-        },
-      },
-    }).subscribe({
-      next: ({ items, isSynced, ...rest }) => {
-        setMessages(items.sort((a, b) => (a.updatedAt > b.updatedAt ? 1 : -1)));
-      },
-    });
-    return () => sub.unsubscribe();
-  }, [conversationId]);
+  const conversationId = params?.id as string;
+  const { messages, setMessages } = useMessage({ conversationId });
 
   const handleSubmit = async (value: string) => {
-    // Add the user's message immediately
+    // Add the user's message eagerly
     // the observeQuery will later add the actual message data saved
     setMessages((prevMessages) => [
       ...prevMessages,

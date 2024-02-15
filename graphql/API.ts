@@ -2,15 +2,6 @@
 /* eslint-disable */
 //  This file was automatically generated and should not be edited.
 
-export type ChatHistory = {
-  __typename: "ChatHistory",
-  createdAt: string,
-  id: string,
-  owner?: string | null,
-  sessionId?: string | null,
-  updatedAt: string,
-};
-
 export type Conversation = {
   __typename: "Conversation",
   createdAt: string,
@@ -36,19 +27,17 @@ export type Message = {
 };
 
 export enum Type {
-  bar = "bar",
-  foo = "foo",
+  ai = "ai",
+  human = "human",
 }
 
 
-export type ModelChatHistoryFilterInput = {
-  and?: Array< ModelChatHistoryFilterInput | null > | null,
+export type ModelConversationFilterInput = {
+  and?: Array< ModelConversationFilterInput | null > | null,
   createdAt?: ModelStringInput | null,
   id?: ModelIDInput | null,
-  not?: ModelChatHistoryFilterInput | null,
-  or?: Array< ModelChatHistoryFilterInput | null > | null,
-  owner?: ModelStringInput | null,
-  sessionId?: ModelStringInput | null,
+  not?: ModelConversationFilterInput | null,
+  or?: Array< ModelConversationFilterInput | null > | null,
   updatedAt?: ModelStringInput | null,
 };
 
@@ -114,21 +103,6 @@ export enum ModelSortDirection {
 }
 
 
-export type ModelChatHistoryConnection = {
-  __typename: "ModelChatHistoryConnection",
-  items:  Array<ChatHistory | null >,
-  nextToken?: string | null,
-};
-
-export type ModelConversationFilterInput = {
-  and?: Array< ModelConversationFilterInput | null > | null,
-  createdAt?: ModelStringInput | null,
-  id?: ModelIDInput | null,
-  not?: ModelConversationFilterInput | null,
-  or?: Array< ModelConversationFilterInput | null > | null,
-  updatedAt?: ModelStringInput | null,
-};
-
 export type ModelConversationConnection = {
   __typename: "ModelConversationConnection",
   items:  Array<Conversation | null >,
@@ -150,24 +124,6 @@ export type ModelMessageFilterInput = {
 export type ModelTypeInput = {
   eq?: Type | null,
   ne?: Type | null,
-};
-
-export type ModelChatHistoryConditionInput = {
-  and?: Array< ModelChatHistoryConditionInput | null > | null,
-  createdAt?: ModelStringInput | null,
-  not?: ModelChatHistoryConditionInput | null,
-  or?: Array< ModelChatHistoryConditionInput | null > | null,
-  owner?: ModelStringInput | null,
-  sessionId?: ModelStringInput | null,
-  updatedAt?: ModelStringInput | null,
-};
-
-export type CreateChatHistoryInput = {
-  createdAt?: string | null,
-  id?: string | null,
-  owner?: string | null,
-  sessionId?: string | null,
-  updatedAt?: string | null,
 };
 
 export type ModelConversationConditionInput = {
@@ -204,24 +160,12 @@ export type CreateMessageInput = {
   updatedAt?: string | null,
 };
 
-export type DeleteChatHistoryInput = {
-  id: string,
-};
-
 export type DeleteConversationInput = {
   id: string,
 };
 
 export type DeleteMessageInput = {
   id: string,
-};
-
-export type UpdateChatHistoryInput = {
-  createdAt?: string | null,
-  id: string,
-  owner?: string | null,
-  sessionId?: string | null,
-  updatedAt?: string | null,
 };
 
 export type UpdateConversationInput = {
@@ -239,12 +183,11 @@ export type UpdateMessageInput = {
   updatedAt?: string | null,
 };
 
-export type ModelSubscriptionChatHistoryFilterInput = {
-  and?: Array< ModelSubscriptionChatHistoryFilterInput | null > | null,
+export type ModelSubscriptionConversationFilterInput = {
+  and?: Array< ModelSubscriptionConversationFilterInput | null > | null,
   createdAt?: ModelSubscriptionStringInput | null,
   id?: ModelSubscriptionIDInput | null,
-  or?: Array< ModelSubscriptionChatHistoryFilterInput | null > | null,
-  sessionId?: ModelSubscriptionStringInput | null,
+  or?: Array< ModelSubscriptionConversationFilterInput | null > | null,
   updatedAt?: ModelSubscriptionStringInput | null,
 };
 
@@ -278,14 +221,6 @@ export type ModelSubscriptionIDInput = {
   notIn?: Array< string | null > | null,
 };
 
-export type ModelSubscriptionConversationFilterInput = {
-  and?: Array< ModelSubscriptionConversationFilterInput | null > | null,
-  createdAt?: ModelSubscriptionStringInput | null,
-  id?: ModelSubscriptionIDInput | null,
-  or?: Array< ModelSubscriptionConversationFilterInput | null > | null,
-  updatedAt?: ModelSubscriptionStringInput | null,
-};
-
 export type ModelSubscriptionMessageFilterInput = {
   and?: Array< ModelSubscriptionMessageFilterInput | null > | null,
   conversationMessagesId?: ModelSubscriptionIDInput | null,
@@ -304,21 +239,6 @@ export type SendMessageQueryVariables = {
 
 export type SendMessageQuery = {
   SendMessage?: string | null,
-};
-
-export type GetChatHistoryQueryVariables = {
-  id: string,
-};
-
-export type GetChatHistoryQuery = {
-  getChatHistory?:  {
-    __typename: "ChatHistory",
-    createdAt: string,
-    id: string,
-    owner?: string | null,
-    sessionId?: string | null,
-    updatedAt: string,
-  } | null,
 };
 
 export type GetConversationQueryVariables = {
@@ -351,29 +271,6 @@ export type GetMessageQuery = {
     text?: string | null,
     type?: Type | null,
     updatedAt: string,
-  } | null,
-};
-
-export type ListChatHistoriesQueryVariables = {
-  filter?: ModelChatHistoryFilterInput | null,
-  id?: string | null,
-  limit?: number | null,
-  nextToken?: string | null,
-  sortDirection?: ModelSortDirection | null,
-};
-
-export type ListChatHistoriesQuery = {
-  listChatHistories?:  {
-    __typename: "ModelChatHistoryConnection",
-    items:  Array< {
-      __typename: "ChatHistory",
-      createdAt: string,
-      id: string,
-      owner?: string | null,
-      sessionId?: string | null,
-      updatedAt: string,
-    } | null >,
-    nextToken?: string | null,
   } | null,
 };
 
@@ -422,22 +319,6 @@ export type ListMessagesQuery = {
   } | null,
 };
 
-export type CreateChatHistoryMutationVariables = {
-  condition?: ModelChatHistoryConditionInput | null,
-  input: CreateChatHistoryInput,
-};
-
-export type CreateChatHistoryMutation = {
-  createChatHistory?:  {
-    __typename: "ChatHistory",
-    createdAt: string,
-    id: string,
-    owner?: string | null,
-    sessionId?: string | null,
-    updatedAt: string,
-  } | null,
-};
-
 export type CreateConversationMutationVariables = {
   condition?: ModelConversationConditionInput | null,
   input: CreateConversationInput,
@@ -469,22 +350,6 @@ export type CreateMessageMutation = {
     id: string,
     text?: string | null,
     type?: Type | null,
-    updatedAt: string,
-  } | null,
-};
-
-export type DeleteChatHistoryMutationVariables = {
-  condition?: ModelChatHistoryConditionInput | null,
-  input: DeleteChatHistoryInput,
-};
-
-export type DeleteChatHistoryMutation = {
-  deleteChatHistory?:  {
-    __typename: "ChatHistory",
-    createdAt: string,
-    id: string,
-    owner?: string | null,
-    sessionId?: string | null,
     updatedAt: string,
   } | null,
 };
@@ -524,22 +389,6 @@ export type DeleteMessageMutation = {
   } | null,
 };
 
-export type UpdateChatHistoryMutationVariables = {
-  condition?: ModelChatHistoryConditionInput | null,
-  input: UpdateChatHistoryInput,
-};
-
-export type UpdateChatHistoryMutation = {
-  updateChatHistory?:  {
-    __typename: "ChatHistory",
-    createdAt: string,
-    id: string,
-    owner?: string | null,
-    sessionId?: string | null,
-    updatedAt: string,
-  } | null,
-};
-
 export type UpdateConversationMutationVariables = {
   condition?: ModelConversationConditionInput | null,
   input: UpdateConversationInput,
@@ -571,22 +420,6 @@ export type UpdateMessageMutation = {
     id: string,
     text?: string | null,
     type?: Type | null,
-    updatedAt: string,
-  } | null,
-};
-
-export type OnCreateChatHistorySubscriptionVariables = {
-  filter?: ModelSubscriptionChatHistoryFilterInput | null,
-  owner?: string | null,
-};
-
-export type OnCreateChatHistorySubscription = {
-  onCreateChatHistory?:  {
-    __typename: "ChatHistory",
-    createdAt: string,
-    id: string,
-    owner?: string | null,
-    sessionId?: string | null,
     updatedAt: string,
   } | null,
 };
@@ -624,22 +457,6 @@ export type OnCreateMessageSubscription = {
   } | null,
 };
 
-export type OnDeleteChatHistorySubscriptionVariables = {
-  filter?: ModelSubscriptionChatHistoryFilterInput | null,
-  owner?: string | null,
-};
-
-export type OnDeleteChatHistorySubscription = {
-  onDeleteChatHistory?:  {
-    __typename: "ChatHistory",
-    createdAt: string,
-    id: string,
-    owner?: string | null,
-    sessionId?: string | null,
-    updatedAt: string,
-  } | null,
-};
-
 export type OnDeleteConversationSubscriptionVariables = {
   filter?: ModelSubscriptionConversationFilterInput | null,
 };
@@ -669,22 +486,6 @@ export type OnDeleteMessageSubscription = {
     id: string,
     text?: string | null,
     type?: Type | null,
-    updatedAt: string,
-  } | null,
-};
-
-export type OnUpdateChatHistorySubscriptionVariables = {
-  filter?: ModelSubscriptionChatHistoryFilterInput | null,
-  owner?: string | null,
-};
-
-export type OnUpdateChatHistorySubscription = {
-  onUpdateChatHistory?:  {
-    __typename: "ChatHistory",
-    createdAt: string,
-    id: string,
-    owner?: string | null,
-    sessionId?: string | null,
     updatedAt: string,
   } | null,
 };

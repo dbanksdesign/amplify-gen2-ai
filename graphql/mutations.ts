@@ -8,23 +8,6 @@ type GeneratedMutation<InputType, OutputType> = string & {
   __generatedMutationOutput: OutputType;
 };
 
-export const createChatHistory = /* GraphQL */ `mutation CreateChatHistory(
-  $condition: ModelChatHistoryConditionInput
-  $input: CreateChatHistoryInput!
-) {
-  createChatHistory(condition: $condition, input: $input) {
-    createdAt
-    id
-    owner
-    sessionId
-    updatedAt
-    __typename
-  }
-}
-` as GeneratedMutation<
-  APITypes.CreateChatHistoryMutationVariables,
-  APITypes.CreateChatHistoryMutation
->;
 export const createConversation = /* GraphQL */ `mutation CreateConversation(
   $condition: ModelConversationConditionInput
   $input: CreateConversationInput!
@@ -62,23 +45,6 @@ export const createMessage = /* GraphQL */ `mutation CreateMessage(
   APITypes.CreateMessageMutationVariables,
   APITypes.CreateMessageMutation
 >;
-export const deleteChatHistory = /* GraphQL */ `mutation DeleteChatHistory(
-  $condition: ModelChatHistoryConditionInput
-  $input: DeleteChatHistoryInput!
-) {
-  deleteChatHistory(condition: $condition, input: $input) {
-    createdAt
-    id
-    owner
-    sessionId
-    updatedAt
-    __typename
-  }
-}
-` as GeneratedMutation<
-  APITypes.DeleteChatHistoryMutationVariables,
-  APITypes.DeleteChatHistoryMutation
->;
 export const deleteConversation = /* GraphQL */ `mutation DeleteConversation(
   $condition: ModelConversationConditionInput
   $input: DeleteConversationInput!
@@ -115,23 +81,6 @@ export const deleteMessage = /* GraphQL */ `mutation DeleteMessage(
 ` as GeneratedMutation<
   APITypes.DeleteMessageMutationVariables,
   APITypes.DeleteMessageMutation
->;
-export const updateChatHistory = /* GraphQL */ `mutation UpdateChatHistory(
-  $condition: ModelChatHistoryConditionInput
-  $input: UpdateChatHistoryInput!
-) {
-  updateChatHistory(condition: $condition, input: $input) {
-    createdAt
-    id
-    owner
-    sessionId
-    updatedAt
-    __typename
-  }
-}
-` as GeneratedMutation<
-  APITypes.UpdateChatHistoryMutationVariables,
-  APITypes.UpdateChatHistoryMutation
 >;
 export const updateConversation = /* GraphQL */ `mutation UpdateConversation(
   $condition: ModelConversationConditionInput

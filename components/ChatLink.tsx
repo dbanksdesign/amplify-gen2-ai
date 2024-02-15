@@ -2,10 +2,10 @@ import { Flex, Menu, MenuItem, Text, View } from "@aws-amplify/ui-react";
 import Link from "next/link";
 import { LuPencil, LuTrash2 } from "react-icons/lu";
 import { client } from "@/client";
+import { Schema } from "@/amplify/data/resource";
 
 export interface Conversation {
-  id: string;
-  name?: string;
+  conversation: Schema["Conversation"];
 }
 
 const options = {
@@ -18,9 +18,11 @@ const options = {
 };
 
 export const ConversationLink = (props: Conversation) => {
-  const { id, name } = props;
+  const {
+    conversation: { id, createdAt },
+  } = props;
   // @ts-ignore
-  // const time = timestamp ? new Date(timestamp).toLocaleString('en-US', options) : ' ';
+  const time = new Date(createdAt).toLocaleString("en-US", options);
 
   const handleDelete = () => {
     client.models.Conversation.delete({
@@ -37,8 +39,9 @@ export const ConversationLink = (props: Conversation) => {
           overflow="hidden"
         >
           <Link className="amplify-link" href={`/chat/${id}`}>
-            {name ?? id}
+            {id}
           </Link>
+          <Text>{time}</Text>
         </View>
         {/* <Text color="font.tertiary">{time}</Text> */}
       </Flex>

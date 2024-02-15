@@ -1,5 +1,5 @@
-import { type ClientSchema, a, defineData } from '@aws-amplify/backend';
-import { langChainFunction } from '../functions/langchain/resource';
+import { type ClientSchema, a, defineData } from "@aws-amplify/backend";
+import { langChainFunction } from "../functions/langchain/resource";
 
 /*== STEP 1 ===============================================================
 The section below creates a Todo database table with a "content" field. Try
@@ -9,27 +9,24 @@ specify that owners, authenticated via your Auth resource can "create",
 authenticated via an API key, can only "read" records.
 =========================================================================*/
 const schema = a.schema({
-  Conversation: a.model({
-      messages: a.hasMany('Message')
-    })
-    .authorization([a.allow.public()]),
-  Message: a.model({
-      text: a.string(),
-      // type: a.string(),
-      type: a.enum(['ai','human'])
-    })
-    .authorization([a.allow.public()]),
-  ChatHistory: a
+  Conversation: a
     .model({
-      sessionId: a.string(),
+      messages: a.hasMany("Message"),
+      name: a.string(),
     })
-    .authorization([a.allow.owner(), a.allow.public().to(['read'])]),
+    .authorization([a.allow.public()]),
+  Message: a
+    .model({
+      text: a.string(),
+      type: a.enum(["ai", "human"]),
+    })
+    .authorization([a.allow.public()]),
   SendMessage: a
     .query()
     .arguments({ message: a.string(), conversationId: a.string() })
     .returns(a.string())
     .authorization([a.allow.public()])
-    .function('langChain')
+    .function("langChain"),
 });
 
 export type Schema = ClientSchema<typeof schema>;
@@ -37,7 +34,7 @@ export type Schema = ClientSchema<typeof schema>;
 export const data = defineData({
   schema,
   authorizationModes: {
-    defaultAuthorizationMode: 'apiKey',
+    defaultAuthorizationMode: "apiKey",
     // API Key is used for a.allow.public() rules
     apiKeyAuthorizationMode: {
       expiresInDays: 30,
@@ -45,7 +42,7 @@ export const data = defineData({
   },
   functions: {
     langChain: langChainFunction,
-  }
+  },
 });
 
 /*== STEP 2 ===============================================================

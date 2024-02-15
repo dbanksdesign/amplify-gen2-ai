@@ -15,20 +15,6 @@ export const SendMessage = /* GraphQL */ `query SendMessage($conversationId: Str
   APITypes.SendMessageQueryVariables,
   APITypes.SendMessageQuery
 >;
-export const getChatHistory = /* GraphQL */ `query GetChatHistory($id: ID!) {
-  getChatHistory(id: $id) {
-    createdAt
-    id
-    owner
-    sessionId
-    updatedAt
-    __typename
-  }
-}
-` as GeneratedQuery<
-  APITypes.GetChatHistoryQueryVariables,
-  APITypes.GetChatHistoryQuery
->;
 export const getConversation = /* GraphQL */ `query GetConversation($id: ID!) {
   getConversation(id: $id) {
     createdAt
@@ -59,36 +45,6 @@ export const getMessage = /* GraphQL */ `query GetMessage($id: ID!) {
 ` as GeneratedQuery<
   APITypes.GetMessageQueryVariables,
   APITypes.GetMessageQuery
->;
-export const listChatHistories = /* GraphQL */ `query ListChatHistories(
-  $filter: ModelChatHistoryFilterInput
-  $id: ID
-  $limit: Int
-  $nextToken: String
-  $sortDirection: ModelSortDirection
-) {
-  listChatHistories(
-    filter: $filter
-    id: $id
-    limit: $limit
-    nextToken: $nextToken
-    sortDirection: $sortDirection
-  ) {
-    items {
-      createdAt
-      id
-      owner
-      sessionId
-      updatedAt
-      __typename
-    }
-    nextToken
-    __typename
-  }
-}
-` as GeneratedQuery<
-  APITypes.ListChatHistoriesQueryVariables,
-  APITypes.ListChatHistoriesQuery
 >;
 export const listConversations = /* GraphQL */ `query ListConversations(
   $filter: ModelConversationFilterInput

@@ -14,20 +14,11 @@ import { useParams, useRouter } from "next/navigation";
 import { Conversation, ConversationLink } from "@/components/ChatLink";
 import { Schema } from "@/amplify/data/resource";
 import { client } from "@/client";
+import { useConversation } from "@/hooks/useConversation";
 
 export default function ChatLayout({ children }: React.PropsWithChildren) {
   const router = useRouter();
-  const [conversations, setConversations] = React.useState<
-    Array<Schema["Conversation"]>
-  >([]);
-
-  React.useEffect(() => {
-    client.models.Conversation.observeQuery().subscribe({
-      next: (results) => {
-        setConversations(results.items);
-      },
-    });
-  }, []);
+  const { conversations } = useConversation();
 
   const handleClick = async () => {
     const convo = await client.models.Conversation.create({});
@@ -44,7 +35,7 @@ export default function ChatLayout({ children }: React.PropsWithChildren) {
         >
           <Flex direction="column" padding="large">
             {conversations.map((convo) => {
-              return <ConversationLink {...convo} key={convo.id} />;
+              return <ConversationLink conversation={convo} key={convo.id} />;
             })}
           </Flex>
         </ScrollView>
