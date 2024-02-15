@@ -6,7 +6,6 @@ import {
   BaseMessage,
   HumanMessage,
 } from "langchain/schema";
-import { Schema } from "../../data/resource";
 import * as queries from "../../../graphql/queries";
 import * as mutations from "../../../graphql/mutations";
 import { AppSyncResolverEvent } from "aws-lambda";
@@ -41,7 +40,7 @@ export class AppSyncMessageHistory extends BaseListChatMessageHistory {
       },
     });
 
-    this.client = generateClient<Schema>({});
+    this.client = generateClient({});
   }
 
   addMessage(message: BaseMessage): Promise<void> {
@@ -62,14 +61,6 @@ export class AppSyncMessageHistory extends BaseListChatMessageHistory {
       })
       .then();
     // todo: figure this out, feels weird
-
-    return this.client.models.Message.create({
-      conversationMessagesId: this.conversationId,
-      text: message.content as string,
-      // @ts-ignore
-      type: foo.type,
-    }).then();
-    // todo: figure this out, feels weird
   }
 
   addAIMessage(message: string): Promise<void> {
@@ -86,11 +77,6 @@ export class AppSyncMessageHistory extends BaseListChatMessageHistory {
         },
       })
       .then();
-    // return this.client.models.Message.create({
-    //   conversationMessagesId: this.conversationId,
-    //   text: message,
-    //   type: Type.ai,
-    // }).then();
   }
 
   addUserMessage(message: string): Promise<void> {
@@ -107,12 +93,6 @@ export class AppSyncMessageHistory extends BaseListChatMessageHistory {
         },
       })
       .then();
-    // return this.client.models.Message.create({
-    //   conversationMessagesId: this.conversationId,
-    //   text: message,
-    //   type: "human",
-    //   // text: message.content,
-    // }).then();
   }
 
   getMessages(): Promise<BaseMessage[]> {
@@ -143,27 +123,6 @@ export class AppSyncMessageHistory extends BaseListChatMessageHistory {
 
         return messages;
       });
-    return this.client.models.Message.list({
-      filter: {
-        conversationMessagesId: {
-          eq: this.conversationId,
-        },
-      },
-    }).then((results) => {
-      console.log({ results });
-      const messages = results.data.map((message) => {
-        switch (message.type) {
-          case "ai":
-            return new AIMessage(message.text ?? "");
-          case "human":
-            return new HumanMessage(message.text ?? "");
-          default:
-            throw new Error(`Got unexpected type: ${message.type}`);
-        }
-      });
-
-      return messages;
-    });
   }
 
   async clear(): Promise<void> {}

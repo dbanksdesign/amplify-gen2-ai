@@ -11,7 +11,7 @@ export const useConversation = () => {
     const sub = client.models.Conversation.observeQuery({}).subscribe({
       next: ({ items, isSynced, ...rest }) => {
         setConversations([
-          ...items.sort((a, b) => (a.updatedAt > b.updatedAt ? -1 : 1)),
+          ...items.sort((a, b) => (a.createdAt > b.createdAt ? -1 : 1)),
         ]);
       },
     });

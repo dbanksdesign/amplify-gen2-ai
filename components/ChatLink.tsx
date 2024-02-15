@@ -25,7 +25,7 @@ const options: Intl.DateTimeFormatOptions = {
 
 export const ConversationLink = (props: Conversation) => {
   const {
-    conversation: { id, createdAt },
+    conversation: { id, createdAt, name },
   } = props;
   const time = new Date(createdAt).toLocaleString("en-US", options);
   const [editShown, setEditShown] = React.useState(false);
@@ -43,6 +43,8 @@ export const ConversationLink = (props: Conversation) => {
       client.models.Conversation.update({
         id,
         name: inputRef.current?.value,
+      }).then(() => {
+        inputRef.current?.blur();
       });
     }
   };
@@ -65,6 +67,7 @@ export const ConversationLink = (props: Conversation) => {
               label="conversation name"
               labelHidden
               ref={inputRef}
+              defaultValue={name ?? ""}
               onBlur={() => {
                 setEditShown(false);
               }}
@@ -75,7 +78,7 @@ export const ConversationLink = (props: Conversation) => {
             className="amplify-link"
             href={`/chat/${id}`}
           >
-            {id}
+            {name ?? id}
           </Link>
           <Text>{time}</Text>
         </View>
