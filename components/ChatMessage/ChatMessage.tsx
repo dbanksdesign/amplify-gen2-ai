@@ -13,7 +13,7 @@ interface ChatMessageProps extends ViewProps {
   message: Schema["Message"];
 }
 
-const options = {
+const options: Intl.DateTimeFormatOptions = {
   hour: "2-digit",
   minute: "2-digit",
 };
@@ -28,7 +28,6 @@ const iconMap = {
 const baseClassName = `amplify-chat-message`;
 
 export function ChatMessage({ message, ...rest }: ChatMessageProps) {
-  // @ts-ignore
   const time = new Date(message.createdAt ?? "").toLocaleString(
     "en-US",
     options

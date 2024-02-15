@@ -25,15 +25,15 @@
   font-size: 1rem;
 }
 
-.amplify-textarea,
-.amplify-input {
-  &:focus {
-    box-shadow: 0 0 1rem
-        color-mix(in srgb, var(--amplify-colors-primary-20), transparent 50%),
-      inset 0 0 1rem
-        color-mix(in srgb, var(--amplify-colors-primary-20), transparent 50%);
-  }
-}
+// .amplify-textarea,
+// .amplify-input {
+//   &:focus {
+//     box-shadow: 0 0 1rem
+//         color-mix(in srgb, var(--amplify-colors-primary-20), transparent 50%),
+//       inset 0 0 1rem
+//         color-mix(in srgb, var(--amplify-colors-primary-20), transparent 50%);
+//   }
+// }
 
 .amplify-button--primary {
   // border: 1px solid var(-)

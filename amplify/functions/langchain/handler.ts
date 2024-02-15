@@ -14,6 +14,8 @@ export const handler: AppSyncResolverHandler<RequestType, any> = async (
   event,
   context
 ) => {
+  // Get the AppSync endpoint and API key from the request
+  // because this lambda is being called as a Lambda data source from AppSync
   const endpoint = `https://${event.request.headers.host}/graphql`;
   const apiKey = event.request.headers["x-api-key"]!;
 

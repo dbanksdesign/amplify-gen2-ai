@@ -1,4 +1,12 @@
-import { Flex, Menu, MenuItem, Text, View } from "@aws-amplify/ui-react";
+import * as React from "react";
+import {
+  Flex,
+  Menu,
+  MenuItem,
+  Text,
+  TextField,
+  View,
+} from "@aws-amplify/ui-react";
 import Link from "next/link";
 import { LuPencil, LuTrash2 } from "react-icons/lu";
 import { client } from "@/client";
@@ -8,9 +16,7 @@ export interface Conversation {
   conversation: Schema["Conversation"];
 }
 
-const options = {
-  // weekday: "long",
-  // year: "numeric",
+const options: Intl.DateTimeFormatOptions = {
   month: "long",
   day: "numeric",
   hour: "2-digit",
@@ -21,13 +27,24 @@ export const ConversationLink = (props: Conversation) => {
   const {
     conversation: { id, createdAt },
   } = props;
-  // @ts-ignore
   const time = new Date(createdAt).toLocaleString("en-US", options);
+  const [editShown, setEditShown] = React.useState(false);
+  const inputRef = React.useRef<HTMLInputElement>(null);
 
   const handleDelete = () => {
     client.models.Conversation.delete({
       id,
     });
+  };
+
+  const handleSubmit = (e: any) => {
+    e.preventDefault();
+    if (inputRef.current?.value) {
+      client.models.Conversation.update({
+        id,
+        name: inputRef.current?.value,
+      });
+    }
   };
 
   return (
@@ -38,7 +55,26 @@ export const ConversationLink = (props: Conversation) => {
           whiteSpace="nowrap"
           overflow="hidden"
         >
-          <Link className="amplify-link" href={`/chat/${id}`}>
+          <View
+            as="form"
+            onSubmit={handleSubmit}
+            display={editShown ? "block" : "none"}
+          >
+            <TextField
+              variation="quiet"
+              label="conversation name"
+              labelHidden
+              ref={inputRef}
+              onBlur={() => {
+                setEditShown(false);
+              }}
+            />
+          </View>
+          <Link
+            style={{ display: editShown ? "none" : "block" }}
+            className="amplify-link"
+            href={`/chat/${id}`}
+          >
             {id}
           </Link>
           <Text>{time}</Text>
@@ -49,6 +85,10 @@ export const ConversationLink = (props: Conversation) => {
         <MenuItem
           onClick={() => {
             /* TODO */
+            setEditShown(true);
+            setTimeout(() => {
+              inputRef.current?.focus();
+            }, 100);
           }}
           gap="xs"
         >
