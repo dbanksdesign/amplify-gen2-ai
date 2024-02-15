@@ -1,0 +1,23 @@
+
+.amplify-chat__footer {
+  // border-top: 1px solid var(--amplify-colors-border-secondary);
+  // box-shadow: var(--amplify-shadows-large);
+  position: relative;
+
+  &::after {
+    content: '';
+    position: absolute;
+    top: -20px;
+    left: 0;
+    width: 100%;
+    height: 20px;
+    background-image: linear-gradient(to top,
+      var(--amplify-colors-background-primary) 0%,
+      color-mix(in srgb, var(--amplify-colors-background-primary), transparent 100%) 100%
+    )
+  }
+}
+
+.amplify-chat-prompt {
+
+}
