@@ -1,21 +1,20 @@
 import { Amplify } from "aws-amplify";
-import { generateClient } from "aws-amplify/api";
+import { generateClient } from "aws-amplify/data";
 import {
   AIMessage,
   BaseListChatMessageHistory,
   BaseMessage,
   HumanMessage,
 } from "langchain/schema";
-import * as queries from "../../../graphql/queries";
-import * as mutations from "../../../graphql/mutations";
 import { AppSyncResolverEvent } from "aws-lambda";
-import { Type } from "../../../graphql/API";
+import { Schema } from "../../data/resource";
 
 interface AppSyncMessageHistoryProps {
   endpoint: string;
   apiKey: string;
   event: AppSyncResolverEvent<{ message: string; conversationId: string }>;
 }
+
 
 export class AppSyncMessageHistory extends BaseListChatMessageHistory {
   lc_namespace = ["foo"];
@@ -36,94 +35,286 @@ export class AppSyncMessageHistory extends BaseListChatMessageHistory {
           endpoint,
           apiKey,
           defaultAuthMode: "apiKey",
+          modelIntrospection: {
+            "version": 1,
+            "models": {
+              "Conversation": {
+                "name": "Conversation",
+                "fields": {
+                  "id": {
+                    "name": "id",
+                    "isArray": false,
+                    "type": "ID",
+                    "isRequired": true,
+                    "attributes": []
+                  },
+                  "messages": {
+                    "name": "messages",
+                    "isArray": true,
+                    "type": {
+                      "model": "Message"
+                    },
+                    "isRequired": false,
+                    "attributes": [],
+                    "isArrayNullable": true,
+                    "association": {
+                      // @ts-ignore
+                      "connectionType": "HAS_MANY",
+                      "associatedWith": [
+                        "conversationMessagesId"
+                      ]
+                    }
+                  },
+                  "name": {
+                    "name": "name",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                  },
+                  "createdAt": {
+                    "name": "createdAt",
+                    "isArray": false,
+                    "type": "AWSDateTime",
+                    "isRequired": true,
+                    "attributes": []
+                  },
+                  "updatedAt": {
+                    "name": "updatedAt",
+                    "isArray": false,
+                    "type": "AWSDateTime",
+                    "isRequired": true,
+                    "attributes": []
+                  }
+                },
+                "syncable": true,
+                "pluralName": "Conversations",
+                "attributes": [
+                  {
+                    "type": "model",
+                    "properties": {}
+                  },
+                  {
+                    "type": "key",
+                    "properties": {
+                      "fields": [
+                        "id"
+                      ]
+                    }
+                  },
+                  {
+                    "type": "auth",
+                    "properties": {
+                      "rules": [
+                        {
+                          "allow": "public",
+                          "operations": [
+                            "create",
+                            "update",
+                            "delete",
+                            "read"
+                          ]
+                        }
+                      ]
+                    }
+                  }
+                ],
+                "primaryKeyInfo": {
+                  "isCustomPrimaryKey": false,
+                  "primaryKeyFieldName": "id",
+                  "sortKeyFieldNames": []
+                }
+              },
+              "Message": {
+                "name": "Message",
+                "fields": {
+                  "id": {
+                    "name": "id",
+                    "isArray": false,
+                    "type": "ID",
+                    "isRequired": true,
+                    "attributes": []
+                  },
+                  "text": {
+                    "name": "text",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                  },
+                  "type": {
+                    "name": "type",
+                    "isArray": false,
+                    "type": {
+                      "enum": "MessageType"
+                    },
+                    "isRequired": false,
+                    "attributes": []
+                  },
+                  "conversationMessagesId": {
+                    "name": "conversationMessagesId",
+                    "isArray": false,
+                    "type": "ID",
+                    "isRequired": false,
+                    "attributes": []
+                  },
+                  "createdAt": {
+                    "name": "createdAt",
+                    "isArray": false,
+                    "type": "AWSDateTime",
+                    "isRequired": true,
+                    "attributes": []
+                  },
+                  "updatedAt": {
+                    "name": "updatedAt",
+                    "isArray": false,
+                    "type": "AWSDateTime",
+                    "isRequired": true,
+                    "attributes": []
+                  }
+                },
+                "syncable": true,
+                "pluralName": "Messages",
+                "attributes": [
+                  {
+                    "type": "model",
+                    "properties": {}
+                  },
+                  {
+                    "type": "key",
+                    "properties": {
+                      "fields": [
+                        "id"
+                      ]
+                    }
+                  },
+                  {
+                    "type": "key",
+                    "properties": {
+                      "name": "gsi-Conversation.messages",
+                      "fields": [
+                        "conversationMessagesId"
+                      ]
+                    }
+                  },
+                  {
+                    "type": "auth",
+                    "properties": {
+                      "rules": [
+                        {
+                          "allow": "public",
+                          "operations": [
+                            "create",
+                            "update",
+                            "delete",
+                            "read"
+                          ]
+                        }
+                      ]
+                    }
+                  }
+                ],
+                "primaryKeyInfo": {
+                  "isCustomPrimaryKey": false,
+                  "primaryKeyFieldName": "id",
+                  "sortKeyFieldNames": []
+                }
+              }
+            },
+            "enums": {
+              "MessageType": {
+                "name": "MessageType",
+                "values": [
+                  "ai",
+                  "human"
+                ]
+              }
+            },
+            "nonModels": {},
+            "queries": {
+              "SendMessage": {
+                "name": "SendMessage",
+                "isArray": false,
+                "type": "String",
+                "isRequired": false,
+                "arguments": {
+                  "message": {
+                    "name": "message",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false
+                  },
+                  "conversationId": {
+                    "name": "conversationId",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false
+                  }
+                }
+              }
+            }
+          }
         },
       },
     });
 
-    this.client = generateClient({});
+    this.client = generateClient<Schema>();
   }
 
-  addMessage(message: BaseMessage): Promise<void> {
+  async addMessage(message: BaseMessage) {
     console.log("Add message");
     const foo = message.toDict();
 
-    return this.client
-      .graphql({
-        query: mutations.createMessage,
-        variables: {
-          input: {
-            conversationMessagesId: this.conversationId,
-            text: message.content as string,
-            // figure out better casting here
-            type: foo.type as Type,
-          },
-        },
-      })
-      .then();
-    // todo: figure this out, feels weird
+    await this.client.models.Message.create({
+      conversationMessagesId: this.conversationId,
+      text: message.content as string,
+      // figure out better casting here
+      type: foo.type as ReturnType<typeof this.client.enums.MessageType.values>[number],
+    })
   }
 
-  addAIMessage(message: string): Promise<void> {
+  async addAIMessage(message: string) {
     console.log("Add AI message");
-    return this.client
-      .graphql({
-        query: mutations.createMessage,
-        variables: {
-          input: {
-            conversationMessagesId: this.conversationId,
-            text: message,
-            type: Type.ai,
-          },
-        },
-      })
-      .then();
+    await this.client.models.Message.create({
+      conversationMessagesId: this.conversationId,
+      text: message,
+      type: 'ai',
+    })
   }
 
-  addUserMessage(message: string): Promise<void> {
+  async addUserMessage(message: string) {
     console.log("Add user message");
-    return this.client
-      .graphql({
-        query: mutations.createMessage,
-        variables: {
-          input: {
-            conversationMessagesId: this.conversationId,
-            text: message,
-            type: Type.human,
-          },
-        },
-      })
-      .then();
+    await this.client.models.Message.create({
+      conversationMessagesId: this.conversationId,
+      text: message,
+      type: 'human',
+    })
   }
 
-  getMessages(): Promise<BaseMessage[]> {
+  async getMessages() {
     console.log("Get messages");
-    return this.client
-      .graphql({
-        query: queries.listMessages,
-        variables: {
-          filter: {
-            conversationMessagesId: {
-              eq: this.conversationId,
-            },
+    const { data: items, errors } = await this.client
+      .models.Message.list({
+        filter: {
+          conversationMessagesId: {
+            eq: this.conversationId,
           },
-        },
+        }
       })
-      .then((results) => {
-        console.log({ results });
-        const messages = results.data.listMessages.items.map((message) => {
-          switch (message.type) {
-            case "ai":
-              return new AIMessage(message.text ?? "");
-            case "human":
-              return new HumanMessage(message.text ?? "");
-            default:
-              throw new Error(`Got unexpected type: ${message.type}`);
-          }
-        });
 
-        return messages;
-      });
+    const messages = items.map((message) => {
+      switch (message.type) {
+        case "ai":
+          return new AIMessage(message.text ?? "");
+        case "human":
+          return new HumanMessage(message.text ?? "");
+        default:
+          throw new Error(`Got unexpected type: ${message.type}`);
+      }
+    });
+
+    return messages;
   }
 
-  async clear(): Promise<void> {}
+  async clear(): Promise<void> { }
 }

@@ -22,7 +22,7 @@
     "@smithy/protocol-http": "^3.1.1",
     "@smithy/signature-v4": "^2.1.1",
     "@smithy/util-utf8": "^2.1.1",
-    "aws-amplify": "^6.0.16",
+    "aws-amplify": "^6.0.18",
     "langchain": "^0.1.17",
     "next": "14.0.2",
     "react": "^18",
@@ -32,8 +32,8 @@
     "sass": "^1.70.0"
   },
   "devDependencies": {
-    "@aws-amplify/backend": "^0.12.1",
-    "@aws-amplify/backend-cli": "^0.11.1",
+    "@aws-amplify/backend": "^0.13.0-beta.4",
+    "@aws-amplify/backend-cli": "^0.12.0-beta.4",
     "@types/aws-lambda": "^8.10.133",
     "@types/node": "^20",
     "@types/react": "^18",

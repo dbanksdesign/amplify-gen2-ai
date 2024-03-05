@@ -1,13 +1,6 @@
 import * as React from "react";
 import {
-  Button,
   Flex,
-  Loader,
-  ScrollView,
-  SelectField,
-  Text,
-  TextAreaField,
-  TextField,
   View,
 } from "@aws-amplify/ui-react";
 import { useParams } from "next/navigation";
@@ -16,7 +9,6 @@ import { ChatMessage } from "@/components/ChatMessage";
 import { ChatPrompt } from "@/components/ChatPrompt";
 import { ChatScroll } from "@/components/ChatScroll";
 import { Schema } from "@/amplify/data/resource";
-import * as queries from "@/graphql/queries";
 import { useMessage } from "@/hooks/useMessage";
 
 const ChatMessages = ({ messages }: { messages: Array<Schema["Message"]> }) => {
@@ -48,13 +40,10 @@ export default function ChatPage() {
         updatedAt: new Date().toISOString(),
       },
     ]);
-    client.graphql({
-      query: queries.SendMessage,
-      variables: {
-        message: value,
-        conversationId: `${conversationId}`,
-      },
-    });
+    client.queries.SendMessage({
+      conversationId: conversationId,
+      message: value,
+    })
   };
 
   return (
