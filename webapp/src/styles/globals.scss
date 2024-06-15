@@ -1,0 +1,71 @@
+[data-amplify-theme] {
+  color: var(--amplify-colors-font-primary);
+}
+
+.amplify-textarea {
+  transition: none;
+}
+
+.app-header {
+  padding-inline: var(--amplify-space-large);
+  padding-block: var(--amplify-space-small);
+  border-bottom: var(--amplify-border-widths-small) solid
+    var(--amplify-colors-border-tertiary);
+}
+
+.app-sidebar {
+  border-inline-end: var(--amplify-border-widths-small) solid
+    var(--amplify-colors-border-tertiary);
+}
+
+.icon-button {
+  font-size: 1rem;
+}
+
+.amplify-button--menu {
+  --amplify-components-button-border-radius: var(--amplify-radii-medium);
+}
+
+.amplify-menu__trigger {
+  border-width: 0;
+}
+
+.amplify-chat-message {
+  display: flex;
+  flex-direction: column;
+  gap: var(--amplify-space-xxxs);
+  position: relative;
+  padding-inline-start: 2.5rem;
+  min-height: 2rem;
+  justify-content: center;
+  margin-block-start: var(--amplify-space-medium);
+}
+
+.amplify-chat-message__avatar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 2rem;
+  height: 2rem;
+  display: flex;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10rem;
+  // background-color: var(--${bgColor})`;
+  color: white;
+  overflow: hidden;
+  &--user {
+    background-color: var(--amplify-colors-primary-60);
+  }
+  &--assistant {
+    background-color: var(--amplify-colors-secondary-60);
+  }
+}
+
+.amplify-chat-message__meta {
+  display: flex;
+  flex-direction: row;
+  align-items: baseline;
+  gap: var(--amplify-space-small);
+}
