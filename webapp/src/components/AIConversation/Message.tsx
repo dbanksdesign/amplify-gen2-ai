@@ -7,14 +7,13 @@ import {
   LuBrainCircuit,
 } from "react-icons/lu";
 // import Markdown from "react-markdown";
-// import { createComponentTheme } from "@aws-amplify/ui";
 import { Schema } from "../../../amplify/data/resource";
 import { useUIComponents } from "./useUIComponents";
 
 const options: Intl.DateTimeFormatOptions = {
   hour: "2-digit",
   minute: "2-digit",
-  second: "2-digit",
+  // second: "2-digit",
 };
 
 const iconMap = {
@@ -23,91 +22,6 @@ const iconMap = {
   agent: <LuBrainCircuit />,
   user: <LuUserCircle2 />,
 };
-
-// const theme = createComponentTheme({
-//   name: "chat-message",
-//   theme(tokens) {
-//     const bgColor = "message-bg-color";
-//     return {
-//       vars: {
-//         [bgColor]: tokens.colors.secondary[60],
-//       },
-//       display: "flex",
-//       flexDirection: "column",
-//       gap: tokens.space.xxxs,
-//       position: "relative",
-//       paddingInlineStart: "2.5rem",
-//       minHeight: "2rem",
-//       justifyContent: "center",
-//       marginBlockStart: tokens.space.medium,
-//       _modifier: {
-//         assistant: {
-//           vars: {
-//             [bgColor]: tokens.colors.primary[60],
-//           },
-//         },
-//       },
-//       _element: {
-//         meta: {
-//           display: "flex",
-//           flexDirection: "row",
-//           alignItems: "baseline",
-//           gap: tokens.space.small,
-//         },
-//         sender: {
-//           fontWeight: tokens.fontWeights.bold,
-//         },
-//         timestamp: {
-//           color: tokens.colors.font.tertiary,
-//           fontSize: tokens.fontSizes.small,
-//         },
-//         icon: {
-//           position: "absolute",
-//           top: 0,
-//           left: 0,
-
-//           width: "2rem",
-//           height: "2rem",
-//           display: "flex",
-//           textAlign: "center",
-//           alignItems: "center",
-//           justifyContent: "center",
-//           borderRadius: "10rem",
-//           backgroundColor: `var(--${bgColor})`,
-//           color: "white",
-//           overflow: "hidden",
-//           _modifier: {
-//             bubble: {
-//               color: tokens.colors.font.tertiary,
-//               backgroundColor: tokens.colors.background.secondary,
-//             },
-//             thinking: {
-//               overflow: "visible",
-//             },
-//           },
-//         },
-//         loader: {
-//           position: "absolute",
-//           width: `calc(100% + ${tokens.space.medium})`,
-//           height: `calc(100% + ${tokens.space.medium})`,
-//           top: `calc(-0.5 * ${tokens.space.medium})`,
-//           left: `calc(-0.5 * ${tokens.space.medium})`,
-//         },
-//         text: {
-//           _modifier: {
-//             bubble: {
-//               paddingInline: tokens.space.medium,
-//               paddingBlock: tokens.space.xs,
-//               borderRadius: tokens.radii.medium,
-//               backgroundColor: `var(--${bgColor})`,
-//               color: tokens.colors.font.inverse,
-//             },
-//           },
-//         },
-//       },
-//     };
-//   },
-// });
 
 interface MessageProps {
   variation?: "bubble" | "block";

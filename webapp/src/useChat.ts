@@ -42,7 +42,6 @@ export const useChat = ({ sessionId, onSessionCreate }: UseChatProps) => {
 
   React.useEffect(() => {
     if (sessionId) {
-      console.log({ sessionId });
       setSid(sessionId);
       client.models.ChatMessage.observeQuery({
         filter: {
@@ -52,7 +51,8 @@ export const useChat = ({ sessionId, onSessionCreate }: UseChatProps) => {
         },
       }).subscribe({
         next: ({ items, isSynced }) => {
-          if (isSynced) {
+          console.log({ items, isSynced });
+          if (isSynced && items.length > 0) {
             setMessages([
               ...items.sort((a, b) => (a.updatedAt > b.updatedAt ? 1 : -1)),
             ]);
@@ -73,31 +73,37 @@ export const useChat = ({ sessionId, onSessionCreate }: UseChatProps) => {
     context?: Record<string, any>;
     uiComponents?: UIComponent[];
   }) => {
+    // optimistically add the message
+    // @ts-ignore
+    setMessages((prevMessages) => [
+      ...prevMessages,
+      {
+        sessionId: sid,
+        role: "user",
+        id: "",
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString(),
+        content: [
+          {
+            text: message,
+          },
+        ],
+      },
+    ]);
+
     let _sid = sid;
     if (!sid) {
       const results = await client.models.ChatSession.create({});
       onSessionCreate?.(results.data?.id);
-      if (results.data?.id) {
-        setSid(results.data.id);
-      }
       _sid = results.data?.id;
-    } else {
-      // save message to db, but don't need to await on it
-      await client.models.ChatMessage.create({
-        sessionId: _sid,
-        content: [{ text: message }],
-        role: "user",
-      });
-
-      // weird that we are passing the message to the data model and then doing ANOTHER
-      // query afterwards...
-      await client.queries.chat({
-        sessionId: _sid,
-        message,
-        context: JSON.stringify(context),
-        uiComponents: JSON.stringify(uiComponents),
-      });
     }
+
+    await client.queries.chat({
+      sessionId: _sid,
+      message,
+      context: JSON.stringify(context),
+      uiComponents: JSON.stringify(uiComponents),
+    });
   };
 
   return {

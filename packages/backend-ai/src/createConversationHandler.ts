@@ -3,6 +3,7 @@ import { generateClient } from "aws-amplify/data";
 import { getAIResponse } from "./getAIResponse";
 import { createMessenger } from "./message";
 import { weatherTool } from "./tool";
+import { Message } from "@aws-sdk/client-bedrock-runtime";
 
 type ConversationHandler = (event: any) => void;
 
@@ -10,7 +11,12 @@ export function createConversationHandler(): ConversationHandler {
   return async function (event) {
     const endpoint = `https://${event.request.headers.host}/graphql`;
     const authToken = event.request.headers.authorization;
-    const { sessionId, message, context, uiComponents } = event.arguments;
+    const {
+      sessionId,
+      message: _message,
+      context,
+      uiComponents,
+    } = event.arguments;
 
     Amplify.configure({
       API: {
@@ -34,7 +40,16 @@ export function createConversationHandler(): ConversationHandler {
       client,
     });
 
+    const message: Message = {
+      role: "user",
+      content: [
+        {
+          text: _message,
+        },
+      ],
+    };
     const messages = await getMessages();
+    saveMessage({ message });
 
     const { aiModel, instructions = "you are a helpful assistant" } =
       // @ts-ignore
