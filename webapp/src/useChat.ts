@@ -81,24 +81,23 @@ export const useChat = ({ sessionId, onSessionCreate }: UseChatProps) => {
         setSid(results.data.id);
       }
       _sid = results.data?.id;
+    } else {
+      // save message to db, but don't need to await on it
+      await client.models.ChatMessage.create({
+        sessionId: _sid,
+        content: [{ text: message }],
+        role: "user",
+      });
+
+      // weird that we are passing the message to the data model and then doing ANOTHER
+      // query afterwards...
+      await client.queries.chat({
+        sessionId: _sid,
+        message,
+        context: JSON.stringify(context),
+        uiComponents: JSON.stringify(uiComponents),
+      });
     }
-    // save message to db, but don't need to await on it
-    // ideally this could be done in a resolver, but this is a PoC
-    const res = await client.models.ChatMessage.create({
-      sessionId: _sid,
-      content: [{ text: message }],
-      role: "user",
-    });
-    // fire the custom query
-    console.log({ res });
-    // weird that we are passing the message to the data model and then doing ANOTHER
-    // query afterwards...
-    const { data } = await client.queries.chat({
-      sessionId: _sid as string,
-      message,
-      context: JSON.stringify(context),
-      uiComponents: JSON.stringify(uiComponents),
-    });
   };
 
   return {

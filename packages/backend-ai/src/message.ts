@@ -1,18 +1,12 @@
-import {
-  BedrockRuntimeClient,
-  ConverseCommand,
-  Message,
-  Tool,
-  InferenceConfiguration,
-} from "@aws-sdk/client-bedrock-runtime";
+import { Message } from "@aws-sdk/client-bedrock-runtime";
 import { Amplify } from "aws-amplify";
 import { generateClient } from "aws-amplify/data";
 
 interface CreateMessengerParams {
-  endpoint: string;
-  routeName: string;
+  // endpoint: string;
+  // authToken: string;
   sessionId: string;
-  authToken: string;
+  client: ReturnType<typeof generateClient>;
 }
 
 // TODO: make this compatible with LangChain history
@@ -20,26 +14,27 @@ interface CreateMessengerParams {
 // it would handle both tool uses as queries and
 // message history?
 export function createMessenger({
-  endpoint,
-  authToken,
+  // endpoint,
+  // authToken,
   sessionId,
+  client,
 }: CreateMessengerParams) {
-  Amplify.configure({
-    API: {
-      GraphQL: {
-        endpoint,
-        defaultAuthMode: "lambda",
-      },
-    },
-  });
+  // Amplify.configure({
+  //   API: {
+  //     GraphQL: {
+  //       endpoint,
+  //       defaultAuthMode: "lambda",
+  //     },
+  //   },
+  // });
 
-  const client = generateClient({
-    authMode: "lambda",
-    authToken,
-    headers: {
-      Authorization: authToken,
-    },
-  });
+  // const client = generateClient({
+  //   authMode: "lambda",
+  //   authToken,
+  //   headers: {
+  //     Authorization: authToken,
+  //   },
+  // });
 
   return {
     saveMessage: async ({ message }: { message: Message }) => {
@@ -103,7 +98,6 @@ export function createMessenger({
       }
     },
     getMessages: async () => {
-      console.log("getMessages");
       try {
         const result = await client.graphql({
           query: `
@@ -140,10 +134,9 @@ export function createMessenger({
         // we need to be able to go from data model to message type?
         // @ts-ignore
         const messages = result.data.listChatMessageBySessionId.items.sort(
-          (a: any, b: any) => (a.updatedAt > b.updatedAt ? 1 : -1),
+          (a: any, b: any) => (a.updatedAt > b.updatedAt ? 1 : -1)
         );
-        // @ts-ignore
-        console.log(messages.map((message) => message.role));
+
         const _messages = messages.map((message: any) => {
           return {
             role: message.role,

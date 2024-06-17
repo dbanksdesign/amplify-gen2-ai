@@ -1,9 +1,6 @@
 import {
-  BedrockRuntimeClient,
-  ConverseCommand,
   Message,
   Tool,
-  InferenceConfiguration,
   ConverseCommandOutput,
 } from "@aws-sdk/client-bedrock-runtime";
 import { getAIMessage, GetAIMessageParams } from "./getAIMessage";
@@ -43,23 +40,21 @@ export async function getAIResponse({
   onToolUse,
   onUIUse,
 }: GetAIResponseParams) {
-  // const systemPrompt = defaultSystemPrompt + instructions;
-  const systemPrompt = instructions;
+  const systemPrompt = `
+  ${defaultSystemPrompt}
+  ${instructions}
+  ${context ? `Context: ${JSON.stringify(context)}` : ""}
+  `;
+
   let response = await getAIMessage({
-    // TODO: add some more prompt templating here
     systemPrompt,
     aiModel,
     credentials,
     messages,
-    // TODO: add ui components as "tools"
     tools: [...tools, ...uiComponentsToTools(uiComponents)],
   });
 
   await onMessage?.(response);
-
-  // console.log(JSON.stringify(response, null, 2));
-
-  // figure out if tool use is a UI component or actual tool
 
   // figure out if LLM wants to use a tool
   const toolUse = response.output?.message?.content?.find((content) => {
