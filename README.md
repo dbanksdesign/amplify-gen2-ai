@@ -13,9 +13,7 @@ This is a sample Amplify Gen 2 application that uses Amazon Bedrock and Anthropi
 
 If you do not have your enviornment set up for Amplify, follow the instructions here: https://docs.amplify.aws/react/start/
 
-##
-
-- Make sure you are in the right region
+Use this repository as a template for a new repository and then follow the steps starting here: https://docs.amplify.aws/react/start/quickstart/#2-deploy-the-starter-app
 
 ## Notes
 

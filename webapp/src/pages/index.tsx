@@ -11,13 +11,11 @@ export default function Home() {
   const router = useRouter();
   const props = useChat({
     onSessionCreate(sessionId) {
-      console.log("onSessionCreate");
       if (sessionId) {
         router.replace(`/chat/${sessionId}`);
       }
     },
   });
-  console.log(props.messages);
 
   return (
     <>
