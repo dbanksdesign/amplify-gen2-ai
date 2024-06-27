@@ -1,0 +1,45 @@
+
+> webapp@0.1.0 sandbox
+> npx ampx sandbox
+
+
+ampx sandbox
+
+Starts sandbox, watch mode for Amplify backend deployments
+
+Commands:
+  ampx sandbox delete            Deletes sandbox environment
+  ampx sandbox secret <command>  Manage sandbox secrets
+
+Options:
+  --debug            Print debug logs to the console  [boolean] [default: false]
+  --help             Show help                                         [boolean]
+  --dir-to-watch     Directory to watch for file changes. All subdirectories and
+                      files will be included. Defaults to the amplify directory.
+                                                                        [string]
+  --exclude          An array of paths or glob patterns to ignore. Paths can be
+                     relative or absolute and can either be files or directories
+                                                                         [array]
+  --identifier       An optional identifier to distinguish between different san
+                     dboxes. Default is the name of the system user executing th
+                     e process                                          [string]
+  --outputs-format   amplify_outputs file format
+                  [string] [choices: "mjs", "json", "json-mobile", "ts", "dart"]
+  --outputs-version  Version of the configuration. Version 0 represents classic
+                     amplify-cli config file amplify-configuration and 1 represe
+                     nts newer config file amplify_outputs
+                                     [string] [choices: "0", "1"] [default: "1"]
+  --outputs-out-dir  A path to directory where amplify_outputs is written. If no
+                     t provided defaults to current process working directory.
+                                                                        [string]
+  --profile          An AWS profile name.                               [string]
+  --once             Execute a single sandbox deployment without watching for fu
+                     ture file changes                                 [boolean]
+
+[31mUnrecognizedClientException: The security token included in the request is invalid.[39m
+[31mUnrecognizedClientException: The security token included in the request is invalid.[39m
+[37;40mnpm[0m [0m[31;40mERR![0m [0m[35mLifecycle script `sandbox` failed with error:[0m 
+[0m[37;40mnpm[0m [0m[31;40mERR![0m [0m[35mError: command failed[0m 
+[0m[37;40mnpm[0m [0m[31;40mERR![0m [0m[35m  in workspace: webapp@0.1.0[0m 
+[0m[37;40mnpm[0m [0m[31;40mERR![0m [0m[35m  at location: /Users/djb/scratch/amplify-gen2-ai/webapp[0m 
+[0m

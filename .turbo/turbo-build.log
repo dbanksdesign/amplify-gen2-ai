@@ -1,0 +1,23 @@
+
+> accenture-amplify-gen2@0.1.0 build
+> next build
+
+[?25l [37m[1m [22m[39m Linting and checking validity of types  [36m.[39m
+ [37m[1m [22m[39m We detected TypeScript in your project and created a [36mtsconfig.json[39m file for you.
+[2K[1G [37m[1m [22m[39m Linting and checking validity of types  [36m..[39m[2K[1G [37m[1m [22m[39m Linting and checking validity of types  [36m...[39m[2K[1G [37m[1m [22m[39m Linting and checking validity of types  [36m.[39m[2K[1G [37m[1m [22m[39m Linting and checking validity of types  [36m..[39m[2K[1G [37m[1m [22m[39m Linting and checking validity of types  [36m...[39m[2K[1G [37m[1m [22m[39m Linting and checking validity of types  [36m.[39m[2K[1G [37m[1m [22m[39m Linting and checking validity of types  [36m..[39m[2K[1G [37m[1m [22m[39m Linting and checking validity of types  [36m...[39m[2K[1G [37m[1m [22m[39m Linting and checking validity of types  [36m.[39m[2K[1G [37m[1m [22m[39m Linting and checking validity of types  [36m..[39m[2K[1G [37m[1m [22m[39m Linting and checking validity of types  [36m...[39m[2K[1G [37m[1m [22m[39m Linting and checking validity of types  [36m.[39m[2K[1G [37m[1m [22m[39m Linting and checking validity of types  [36m..[39m[2K[1G [37m[1m [22m[39m Linting and checking validity of types  [36m...[39m[2K[1G [37m[1m [22m[39m Linting and checking validity of types  [36m.[39m[2K[1G [37m[1m [22m[39m Linting and checking validity of types  [36m..[39m[2K[1G [37m[1m [22m[39m Linting and checking validity of types  [36m...[39m[2K[1G [37m[1m [22m[39m Linting and checking validity of types  [36m.[39m[2K[1G [37m[1m [22m[39m Linting and checking validity of types  [36m..[39m[2K[1G [37m[1m [22m[39m Linting and checking validity of types  [36m...[39m[2K[1G [37m[1m [22m[39m Linting and checking validity of types  [36m.[39m[2K[1G [37m[1m [22m[39m Linting and checking validity of types  [36m..[39m[2K[1G [37m[1m [22m[39m Linting and checking validity of types  [36m...[39m[31mFailed to compile.
+[39m
+[36m./components/ChatLayout.tsx[39m:[33m14[39m:[33m48[39m
+[31m[1mType error[22m[39m: Cannot find module '@/components/ChatLink' or its corresponding type declarations.
+
+[0m [90m 12 |[39m } [36mfrom[39m [32m"@aws-amplify/ui-react"[39m[33m;[39m[0m
+[0m [90m 13 |[39m [36mimport[39m { useParams[33m,[39m useRouter } [36mfrom[39m [32m"next/navigation"[39m[33m;[39m[0m
+[0m[31m[1m>[22m[39m[90m 14 |[39m [36mimport[39m { [33mConversation[39m[33m,[39m [33mConversationLink[39m } [36mfrom[39m [32m"@/components/ChatLink"[39m[33m;[39m[0m
+[0m [90m    |[39m                                                [31m[1m^[22m[39m[0m
+[0m [90m 15 |[39m [36mimport[39m { [33mSchema[39m } [36mfrom[39m [32m"@/amplify/data/resource"[39m[33m;[39m[0m
+[0m [90m 16 |[39m [36mimport[39m { client } [36mfrom[39m [32m"@/client"[39m[33m;[39m[0m
+[0m [90m 17 |[39m [36mimport[39m { useConversation } [36mfrom[39m [32m"@/hooks/useConversation"[39m[33m;[39m[0m
+[?25h[37;40mnpm[0m [0m[31;40mERR![0m [0m[35mLifecycle script `build` failed with error:[0m 
+[0m[37;40mnpm[0m [0m[31;40mERR![0m [0m[35mError: command failed[0m 
+[0m[37;40mnpm[0m [0m[31;40mERR![0m [0m[35m  in workspace: accenture-amplify-gen2@0.1.0[0m 
+[0m[37;40mnpm[0m [0m[31;40mERR![0m [0m[35m  at location: /Users/djb/scratch/amplify-gen2-ai/webapp[0m 
+[0m

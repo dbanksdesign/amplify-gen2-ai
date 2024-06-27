@@ -1,5 +1,5 @@
 import { type Schema } from "../resource";
-import { summarize } from "backend-ai";
+import { summarize } from "../../../backend-ai";
 
 export const handler: Schema["textSummarizer"]["functionHandler"] = async (
   event
